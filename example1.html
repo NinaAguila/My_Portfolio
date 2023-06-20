@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<script>
+		function loadXMLDoc() { //function name
+			var xhttp = new XMLHttpRequest();
+
+			xhttp.open("GET", "greeting.txt");
+			xhttp.send();
+
+			xhttp.onreadystatechange = function() {
+
+				document.getElementById("demo").innerHTML = this.responseText;
+
+				//document - this html file
+				//.getElementById - find the element in this html document witht the id demo
+				//.innerHTML - content of demo
+				//this.responseText = this - xhttp
+				//responseText = the text received by xhttp
+			};
+		}
+	</script>
+
+	<head>
+		<title>XMLHttpRequest Demonstration</title>
+	</head>
+
+	<body>
+		<h2>Using the XMLHttpRequest Object</h2>
+		<div id = "demo">
+			<button type = "button" onclick="loadXMLDoc()">Change Content</button>
+		</div>
+	</body>
+</html>

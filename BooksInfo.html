@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<!-- ASSIGNMENT 3 in Advanced Topics in Computer Science 
+
+by: Agdon, Fatima Marie P.
+MSCS 1101
+
+-->
+<html>
+<!-- S T Y L I N G -->
+
+  <style type = "text/css">
+    body{
+    font-family:"Arial";
+    }
+
+    th {
+
+      background-color: #072f5f;
+      color: white;
+
+    }
+
+    td {
+
+      background-color: #fcfcfc;
+    }
+
+    table,th,td {
+      font-family:"Arial";
+      border : 5px solid;
+      border-color: #ffffff;
+     border-collapse: collapse;
+    }
+
+    th,td {
+      padding: 5px;
+      }
+
+    input {
+      width: 200px;
+      height: 20px;
+      border: 1px solid black;
+      padding: 3px;
+    }
+
+    button {
+      background-color: #3895D3;
+      color: #ffffff;
+      font-size: 15px;
+    }
+
+  </style>
+<body>
+
+  <!-- F O R M -->
+
+  <p><b><i>Click on a Book Title/Author to display the book's information.</i></b></p>
+  <label for="bkauthor">Author: </label> <input type ="text" name = "auth" id="bkauthor"><br><br>
+  <label for="bktitle">Title: </label> <input type ="text" name = "titlex" id="bktitle"><br><br>
+  <label for="bkdate">Published Date: </label> <input type ="text" name = "pdate" id="bkdate"><br><br>
+  <label for="bkgenre">Genre: </label> <input type ="text" name = "genre" id="bkgenre"><br><br>
+  <label for="bkprice">Price: </label> <input type ="text" name = "price" id="bkprice"><br><br>
+  <label for="bkdesc">Description: </label> <input type ="text" name = "desc" id="bkdesc"><br><br>
+  <button onclick="submitInput();">Submit</button><br><br>
+
+  <table id='demo'></table>
+  
+
+  <script>
+    var x,xmlhttp,xmlDoc
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "books.xml", false);
+    xmlhttp.send();
+    xmlDoc = xmlhttp.responseXML; 
+    x = xmlDoc.getElementsByTagName("book");
+
+    // -- T A B L E  L A Y O U T -- //
+    table="<tr><th>Author</th><th>Title</th><th>Published Date</th><th>Genre</th><th>Price</th><th>Description</th></tr>";
+    for (i = 0; i <x.length; i++) { 
+      table += "<tr displayBookDetails(" + i + ")><td>";
+      table += x[i].getElementsByTagName("author")[0].childNodes[0].nodeValue;
+      table += "</td><td>";
+      table += x[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+      table += "</td><td>";
+      table += x[i].getElementsByTagName("publish_date")[0].childNodes[0].nodeValue;
+      table += "</td><td>";
+      table += x[i].getElementsByTagName("genre")[0].childNodes[0].nodeValue;
+      table += "</td><td>";
+      table += x[i].getElementsByTagName("price")[0].childNodes[0].nodeValue;
+      table += "</td><td>";
+      table += x[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+      table += "</td></tr>";
+    }
+    document.getElementById("demo").innerHTML = table; //submit content of demo to table
+
+     var table = document.getElementById('demo'), rowidx;
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function() 
+                    {
+                         rowidx = this.rowIndex;
+                         document.getElementById("bkauthor").value = this.cells[0].innerHTML;
+                         document.getElementById("bktitle").value = this.cells[1].innerHTML;
+                         document.getElementById("bkdate").value = this.cells[2].innerHTML;
+                         document.getElementById("bkgenre").value = this.cells[3].innerHTML;
+                         document.getElementById("bkprice").value = this.cells[4].innerHTML;
+                         document.getElementById("bkdesc").value = this.cells[5].innerHTML;
+                    };
+                }
+
+               function submitInput() //for changing contents of the form
+            {
+                table.rows[rowidx].cells[0].innerHTML = document.getElementById("bkauthor").value;
+                table.rows[rowidx].cells[1].innerHTML = document.getElementById("bktitle").value;
+                table.rows[rowidx].cells[2].innerHTML = document.getElementById("bkdate").value;
+                table.rows[rowidx].cells[3].innerHTML = document.getElementById("bkgenre").value;
+                table.rows[rowidx].cells[4].innerHTML = document.getElementById("bkprice").value;
+                table.rows[rowidx].cells[5].innerHTML = document.getElementById("bkdesc").value;
+            }
+
+  </script>
+
+</body>
+</html>

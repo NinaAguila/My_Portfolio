@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XML Demonstration</title>
+</head>
+
+<body>
+	<h2>Displaying titles of CD Catalog</h2>
+	<button type = "button" onclick="loadXMLDoc()">Load XML File</button>
+	<p id = "demo"></p>
+</body>
+
+<script>
+	function loadXMLDoc() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "cd_catalog.xml", true);
+		xhttp.send();
+
+		xhttp.onreadystatechange = function() {
+			myFunction(this);
+			//if xml is received, contents are obtained, it will be thrown here
+		};
+	}	
+
+	function myFunction(xml) {
+		var cdprice, ctitle, idx, xmlDoc, txt;
+		xmlDoc = xml.responseXML;
+		txt = "";
+		cdprice = xmlDoc.getElementsByTagName("PRICE");
+		ctitle = xmlDoc.getElementsByTagName("TITLE");
+
+		for(idx = 0; idx < ctitle.length; idx++) {
+			if(cdprice[idx].childNodes[0].nodeValue < 10.00) {
+				txt += cdprice[idx].childNodes[0].nodeValue + " - " + ctitle[idx].childNodes[0].nodeValue + "<br>";
+			}
+		}
+
+		document.getElementById("demo").innerHTML = txt;
+	}
+
+	</script>
+</html>
